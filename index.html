@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>복사 붙여넣기 달인 도전!</title>
+    <title>복사 붙여넣기 달인 도전기</title>
     <style>
         :root {
             --primary: #4a90e2;
@@ -15,108 +15,71 @@
         body { 
             font-family: 'Pretendard', 'Nanum Gothic', sans-serif; 
             background-color: var(--bg); 
-            margin: 0; padding: 50px 20px; 
+            margin: 0; padding: 50px 20px 0 20px; 
             color: var(--text); 
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* 세련된 제목 영역 */
-        .header { 
-            text-align: center; 
-            margin-bottom: 70px; 
-            animation: fadeInDown 1s ease;
-        }
+        /* 제목 영역 */
+        .header { text-align: center; margin-bottom: 70px; animation: fadeInDown 1s ease; }
         .header h1 { 
-            font-size: 3.2rem; 
-            color: #1a2a6c; 
-            margin: 0; 
+            font-size: 3.2rem; color: #1a2a6c; margin: 0; 
             background: linear-gradient(to right, #1a2a6c, #4a90e2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .header p { font-size: 1.3rem; color: #7f8c8d; margin-top: 15px; }
 
-        .container { max-width: 850px; margin: 0 auto; }
+        .container { max-width: 850px; margin: 0 auto; min-height: 100vh; }
 
         /* 단계 타이틀 */
         .level-card {
             background: linear-gradient(135deg, #1a2a6c, #4a90e2);
-            color: white;
-            padding: 18px 28px;
-            border-radius: 15px;
-            margin: 60px 0 25px 0;
-            font-size: 1.4rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            color: white; padding: 18px 28px; border-radius: 15px;
+            margin: 60px 0 25px 0; font-size: 1.4rem; font-weight: bold;
+            display: flex; align-items: center; gap: 12px;
             box-shadow: 0 5px 15px rgba(26, 42, 108, 0.2);
         }
 
-        /* 미션 카드 스타일 */
+        /* 미션 카드 */
         .mission { 
-            background: white;
-            margin-bottom: 30px; 
-            padding: 35px; 
-            border-radius: 25px; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
-            border: 2px solid transparent;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
+            background: white; margin-bottom: 30px; padding: 35px; border-radius: 25px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03); border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
         }
         .mission.completed { 
-            border-color: var(--success);
-            background-color: #fafffb;
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(46, 204, 113, 0.15);
+            border-color: var(--success); background-color: #fafffb;
+            transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(46, 204, 113, 0.15);
         }
         
         .instruction { font-weight: 700; font-size: 1.25rem; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
-        .instruction .tag { font-size: 0.85rem; background: #edf2f7; padding: 5px 10px; border-radius: 8px; color: #4a5568; font-weight: bold; }
+        .instruction .tag { font-size: 0.85rem; background: #edf2f7; padding: 5px 10px; border-radius: 8px; color: #4a5568; }
         
-        .story-display { 
-            font-size: 1.35rem; 
-            padding: 22px; 
-            background: #f7fafc; 
-            border-radius: 15px; 
-            margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
-        }
+        .story-display { font-size: 1.35rem; padding: 22px; background: #f7fafc; border-radius: 15px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
         
-        /* 입력 컨트롤 */
         input[type="text"], textarea { 
-            width: 100%; padding: 18px; 
-            font-size: 1.2rem; 
-            border: 2px solid #e2e8f0; 
-            border-radius: 15px; 
-            box-sizing: border-box; 
-            transition: all 0.3s;
-            background-color: white;
+            width: 100%; padding: 18px; font-size: 1.2rem; border: 2px solid #e2e8f0; 
+            border-radius: 15px; box-sizing: border-box; transition: all 0.3s;
         }
         input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 5px rgba(74, 144, 226, 0.15); outline: none; }
         
         .copy-box { background-color: #fff9db; border: 2px dashed #f1c40f; cursor: pointer; height: 90px; }
         .delete-box { color: #cbd5e0; height: 80px; }
-        
-        .result { margin-top: 15px; font-weight: 800; text-align: right; height: 28px; color: var(--success); font-size: 1.1rem; }
+        .result { margin-top: 15px; font-weight: 800; text-align: right; height: 28px; color: var(--success); }
 
-        /* 결과 축하 화면 (화려하게 변경) */
+        /* 성공 축하 화면 */
         #final-zone { 
-            display: none; 
-            text-align: center; 
-            padding: 100px 50px; 
-            background: white; 
-            border-radius: 35px; 
-            margin-top: 80px;
-            box-shadow: 0 25px 60px rgba(241, 196, 15, 0.2);
-            border: 5px solid var(--gold);
-            animation: bounceIn 1.2s both, pulseGold 2s infinite;
-            position: relative;
-            z-index: 10;
+            display: none; text-align: center; padding: 100px 50px; background: white; 
+            border-radius: 35px; margin-top: 80px; border: 5px solid var(--gold);
+            animation: bounceIn 1.2s both, pulseGold 2s infinite; position: relative; z-index: 10;
         }
         .trophy { font-size: 6rem; margin-bottom: 25px; animation: trophyBounce 1s infinite alternate; }
+
+        /* 푸터 스타일 */
+        footer {
+            margin-top: 100px; padding: 40px 0; text-align: center;
+            border-top: 1px solid #e2e8f0; color: #a0aec0; font-size: 1rem;
+        }
 
         /* 포인트 컬러 */
         .blue { color: #3498db; font-weight: bold; }
@@ -124,120 +87,54 @@
         .green { color: #27ae60; font-weight: bold; }
         .orange { color: #f39c12; font-weight: bold; }
 
-        /* 애니메이션 정의 */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.08); opacity: 1; }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); }
-        }
+        @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); } }
         @keyframes pulseGold { 0% { box-shadow: 0 25px 60px rgba(241, 196, 15, 0.2); } 50% { box-shadow: 0 25px 80px rgba(241, 196, 15, 0.4); } 100% { box-shadow: 0 25px 60px rgba(241, 196, 15, 0.2); } }
         @keyframes trophyBounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
-        
-        /* 꽃가루 스타일 */
         .confetti { position: fixed; width: 12px; height: 12px; pointer-events: none; z-index: 1000; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>복사 붙여넣기 달인 도전기</h1>
-    <p>총 15개의 미션을 해결하고 황금 트로피를 차지하세요! 🏆</p>
-</div>
-
 <div class="container">
+    <div class="header">
+        <h1>복사 붙여넣기 달인 도전기</h1>
+        <p>총 15개의 미션을 해결하고 황금 트로피를 차지하세요! 🏆</p>
+    </div>
+
     <div class="level-card">🌱 1단계: 마우스 드래그 & 우클릭 도전</div>
-    <div class="mission" id="m1">
-        <p class="instruction"><span class="tag">도전 1</span> <span class="blue">아기 돼지</span>만 복사해서 붙여넣으세요.</p>
-        <div class="story-display">어느 날 <span class="blue">아기 돼지</span>가 집을 지었어요.</div>
-        <input type="text" oninput="check(this, '아기 돼지', 'm1')"><div class="result"></div>
-    </div>
-    <div class="mission" id="m2">
-        <p class="instruction"><span class="tag">도전 2</span> <span class="red">짚으로 만든 집</span>을 복사하세요.</p>
-        <div class="story-display">첫째는 <span class="red">짚으로 만든 집</span>을 지었답니다.</div>
-        <input type="text" oninput="check(this, '짚으로 만든 집', 'm2')"><div class="result"></div>
-    </div>
-    <div class="mission" id="m3">
-        <p class="instruction"><span class="tag">도전 3</span> [마우스 우클릭] 메뉴를 사용해서 <span class="green">나무</span>라는 글자만 복사하세요.</p>
-        <div class="story-display">둘째는 <span class="green">나무</span>로 집을 지었습니다.</div>
-        <input type="text" oninput="check(this, '나무', 'm3')"><div class="result"></div>
-    </div>
-    <div class="mission" id="m4">
-        <p class="instruction"><span class="tag">도전 4</span> [마우스 우클릭]으로 <span class="orange">벽돌집</span>만 복사해서 붙여넣으세요.</p>
-        <div class="story-display">셋째는 <span class="orange">벽돌집</span>을 튼튼하게 지었지요.</div>
-        <input type="text" oninput="check(this, '벽돌집', 'm4')"><div class="result"></div>
-    </div>
-    <div class="mission" id="m5">
-        <p class="instruction"><span class="tag">도전 5</span> 문장 끝의 마침표(.)까지 조심해서 복사하세요.</p>
-        <div class="story-display">늑대가 나타나 후우~ 하고 입김을 불었습니다.</div>
-        <input type="text" oninput="check(this, '늑대가 나타나 후우~ 하고 입김을 불었습니다.', 'm5')"><div class="result"></div>
-    </div>
+    <div class="mission" id="m1"><p class="instruction"><span class="tag">도전 1</span> <span class="blue">아기 돼지</span>만 복사해서 붙여넣으세요.</p><div class="story-display">어느 날 <span class="blue">아기 돼지</span>가 집을 지었어요.</div><input type="text" oninput="check(this, '아기 돼지', 'm1')"><div class="result"></div></div>
+    <div class="mission" id="m2"><p class="instruction"><span class="tag">도전 2</span> <span class="red">짚으로 만든 집</span>을 복사하세요.</p><div class="story-display">첫째는 <span class="red">짚으로 만든 집</span>을 지었답니다.</div><input type="text" oninput="check(this, '짚으로 만든 집', 'm2')"><div class="result"></div></div>
+    <div class="mission" id="m3"><p class="instruction"><span class="tag">도전 3</span> [마우스 우클릭] 메뉴를 사용해서 <span class="green">나무</span>라는 글자만 복사하세요.</p><div class="story-display">둘째는 <span class="green">나무</span>로 집을 지었습니다.</div><input type="text" oninput="check(this, '나무', 'm3')"><div class="result"></div></div>
+    <div class="mission" id="m4"><p class="instruction"><span class="tag">도전 4</span> [마우스 우클릭]으로 <span class="orange">벽돌집</span>만 복사해서 붙여넣으세요.</p><div class="story-display">셋째는 <span class="orange">벽돌집</span>을 튼튼하게 지었지요.</div><input type="text" oninput="check(this, '벽돌집', 'm4')"><div class="result"></div></div>
+    <div class="mission" id="m5"><p class="instruction"><span class="tag">도전 5</span> 문장 끝의 마침표(.)까지 조심해서 복사하세요.</p><div class="story-display">늑대가 나타나 후우~ 하고 입김을 불었습니다.</div><input type="text" oninput="check(this, '늑대가 나타나 후우~ 하고 입김을 불었습니다.', 'm5')"><div class="result"></div></div>
 
     <div class="level-card">🚀 2단계: 핵심 단축키(Ctrl+C, V) 도전</div>
-    <div class="mission" id="m6">
-        <p class="instruction"><span class="tag">도전 6</span> <span>Ctrl + C</span> / <span>Ctrl + V</span>로 <span class="red">금도끼</span>를 옮기세요.</p>
-        <div class="story-display">산신령이 <span class="red">금도끼</span>를 번쩍 들었습니다.</div>
-        <input type="text" oninput="check(this, '금도끼', 'm6')"><div class="result"></div>
-    </div>
-    <div class="mission" id="m7">
-        <p class="instruction"><span class="tag">도전 7</span> <span>Ctrl + C</span> / <span>Ctrl + V</span>로 <span class="blue">은도끼</span>를 옮기세요.</p>
-        <div class="story-display">이번에는 반짝이는 <span class="blue">은도끼</span>를 보여주셨어요.</div>
-        <input type="text" oninput="check(this, '은도끼', 'm7')"><div class="result"></div>
-    </div>
-    <div class="mission" id="m8">
-        <p class="instruction"><span class="tag">도전 8</span> <span class="green">정직</span>이라는 두 글자만 쏙 복사해서 옮기세요.</p>
-        <div class="story-display">나무꾼은 참 <span class="green">정직</span>한 사람이었습니다.</div>
-        <input type="text" oninput="check(this, '정직', 'm8')"><div class="result"></div>
-    </div>
-    <div class="mission" id="m9">
-        <p class="instruction"><span class="tag">도전 9</span> 따옴표(")와 물음표(?)까지 포함해서 복사하세요.</p>
-        <div class="story-display">"이 금도끼가 네 도끼냐?"</div>
-        <input type="text" oninput="check(this, '&#34;이 금도끼가 네 도끼냐?&#34;', 'm9')"><div class="result"></div>
-    </div>
-    <div class="mission" id="m10">
-        <p class="instruction"><span class="tag">도전 10</span> 문장 전체(따옴표 포함)를 복사해서 붙여넣으세요.</p>
-        <div class="story-display">"제 도끼는 낡은 쇠도끼입니다."</div>
-        <input type="text" oninput="check(this, '&#34;제 도끼는 낡은 쇠도끼입니다.&#34;', 'm10')"><div class="result"></div>
-    </div>
+    <div class="mission" id="m6"><p class="instruction"><span class="tag">도전 6</span> <span>Ctrl + C</span> / <span>V</span>로 <span class="red">금도끼</span>를 옮기세요.</p><div class="story-display">산신령이 <span class="red">금도끼</span>를 번쩍 들었습니다.</div><input type="text" oninput="check(this, '금도끼', 'm6')"><div class="result"></div></div>
+    <div class="mission" id="m7"><p class="instruction"><span class="tag">도전 7</span> <span>Ctrl + C</span> / <span>V</span>로 <span class="blue">은도끼</span>를 옮기세요.</p><div class="story-display">이번에는 반짝이는 <span class="blue">은도끼</span>를 보여주셨어요.</div><input type="text" oninput="check(this, '은도끼', 'm7')"><div class="result"></div></div>
+    <div class="mission" id="m8"><p class="instruction"><span class="tag">도전 8</span> <span class="green">정직</span>이라는 두 글자만 쏙 복사해서 옮기세요.</p><div class="story-display">나무꾼은 참 <span class="green">정직</span>한 사람이었습니다.</div><input type="text" oninput="check(this, '정직', 'm8')"><div class="result"></div></div>
+    <div class="mission" id="m9"><p class="instruction"><span class="tag">도전 9</span> 따옴표(")와 물음표(?)까지 포함해서 복사하세요.</p><div class="story-display">"이 금도끼가 네 도끼냐?"</div><input type="text" oninput="check(this, '&#34;이 금도끼가 네 도끼냐?&#34;', 'm9')"><div class="result"></div></div>
+    <div class="mission" id="m10"><p class="instruction"><span class="tag">도전 10</span> 문장 전체(따옴표 포함)를 복사해서 붙여넣으세요.</p><div class="story-display">"제 도끼는 낡은 쇠도끼입니다."</div><input type="text" oninput="check(this, '&#34;제 도끼는 낡은 쇠도끼입니다.&#34;', 'm10')"><div class="result"></div></div>
 
     <div class="level-card">🔥 3단계: 전체 선택(Ctrl + A) & 삭제 도전</div>
-    <div class="mission" id="m11">
-        <p class="instruction"><span class="tag">도전 11</span> 박스 클릭 → <span>Ctrl + A</span> → 복사해서 붙여넣기!</p>
-        <textarea class="copy-box" id="q11" readonly>흥부와 놀부 형제가 살고 있었는데, 흥부는 마음씨가 착했어요.</textarea>
-        <textarea oninput="check(this, document.getElementById('q11').value, 'm11')" placeholder="여기에 붙여넣으세요"></textarea><div class="result"></div>
-    </div>
-    <div class="mission" id="m12">
-        <p class="instruction"><span class="tag">도전 12</span> 박스 클릭 → <span>Ctrl + A</span> → 지우기!</p>
-        <textarea class="delete-box" oninput="checkDel(this, 'm12')">이 글자들을 한꺼번에 싹 지워보세요!</textarea><div class="result"></div>
-    </div>
-    <div class="mission" id="m13">
-        <p class="instruction"><span class="tag">도전 13</span> <span>Ctrl + A</span>로 긴 문장을 한꺼번에 복사하세요.</p>
-        <textarea class="copy-box" id="q13" readonly style="height:90px;">제비가 물어다 준 박씨를 심었더니 커다란 박이 열렸어요. 그 박 안에서는 금은보화가 쏟아져 나와 흥부는 부자가 되었답니다!</textarea>
-        <textarea style="height:90px;" oninput="check(this, document.getElementById('q13').value, 'm13')" placeholder="여기에 붙여넣으세요"></textarea><div class="result"></div>
-    </div>
-    <div class="mission" id="m14">
-        <p class="instruction"><span class="tag">도전 14</span> 아래 박스 안을 클릭하고 <span>Ctrl + A</span>로 싹 지우세요.</p>
-        <textarea class="delete-box" oninput="checkDel(this, 'm14')">삭제 미션을 준비하세요! 이 글자들을 모두 없애면 미션 성공입니다.</textarea><div class="result"></div>
-    </div>
-    <div class="mission" id="m15">
-        <p class="instruction"><span class="tag">도전 15</span> 모든 단축키를 사용해서 완성하세요!</p>
-        <textarea class="copy-box" id="q15" readonly>축하합니다! 당신은 이제 진정한 복사 붙여넣기 달인입니다. 최고예요!</textarea>
-        <textarea oninput="check(this, document.getElementById('q15').value, 'm15')" placeholder="여기에 붙여넣으세요"></textarea><div class="result"></div>
-    </div>
+    <div class="mission" id="m11"><p class="instruction"><span class="tag">도전 11</span> 박스 클릭 → <span>Ctrl + A</span> → 복사해서 붙여넣기!</p><textarea class="copy-box" id="q11" readonly>흥부와 놀부 형제가 살고 있었는데, 흥부는 마음씨가 착했어요.</textarea><textarea oninput="check(this, document.getElementById('q11').value, 'm11')"></textarea><div class="result"></div></div>
+    <div class="mission" id="m12"><p class="instruction"><span class="tag">도전 12</span> 박스 클릭 → <span>Ctrl + A</span> → 지우기!</p><textarea class="delete-box" oninput="checkDel(this, 'm12')">이 글자들을 한꺼번에 싹 지워보세요!</textarea><div class="result"></div></div>
+    <div class="mission" id="m13"><p class="instruction"><span class="tag">도전 13</span> <span>Ctrl + A</span>로 긴 문장을 한꺼번에 복사하세요.</p><textarea class="copy-box" id="q13" readonly style="height:90px;">제비가 물어다 준 박씨를 심었더니 커다란 박이 열렸어요. 그 박 안에서는 금은보화가 쏟아져 나와 흥부는 부자가 되었답니다!</textarea><textarea style="height:90px;" oninput="check(this, document.getElementById('q13').value, 'm13')"></textarea><div class="result"></div></div>
+    <div class="mission" id="m14"><p class="instruction"><span class="tag">도전 14</span> 아래 박스 안을 클릭하고 <span>Ctrl + A</span>로 싹 지우세요.</p><textarea class="delete-box" oninput="checkDel(this, 'm14')">이 글자들을 모두 없애면 미션 성공입니다!</textarea><textarea></textarea><div class="result"></div></div>
+    <div class="mission" id="m15"><p class="instruction"><span class="tag">도전 15</span> 모든 단축키를 사용해서 완성하세요!</p><textarea class="copy-box" id="q15" readonly>축하합니다! 당신은 이제 진정한 복사 붙여넣기 달인입니다. 최고예요!</textarea><textarea oninput="check(this, document.getElementById('q15').value, 'm15')"></textarea><div class="result"></div></div>
 
     <div id="final-zone">
         <div class="trophy">🏆</div>
         <h2 style="font-size: 3rem; margin: 0; color: #1b5e20;">황금 복붙 달인 탄생!</h2>
         <p style="font-size: 1.4rem; color: #333; margin: 25px 0;">모든 미션을 완벽하게 통과했습니다. 대단해요!</p>
-        <button onclick="location.reload()" style="padding: 15px 40px; border: none; background: linear-gradient(to right, #1a2a6c, #4a90e2); color: white; border-radius: 50px; cursor: pointer; font-size: 1.1rem; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">다시 도전하기</button>
+        <button onclick="location.reload()" style="padding: 15px 40px; border: none; background: linear-gradient(to right, #1a2a6c, #4a90e2); color: white; border-radius: 50px; cursor: pointer; font-size: 1.1rem; font-weight: bold;">다시 도전하기</button>
     </div>
+
+    <footer>Disital Life Academy @ 2026 명쌤</footer>
 </div>
 
 <script>
     let done = new Set();
-    const totalMissions = 15;
-
     function check(el, ans, id) {
         let temp = document.createElement("div");
         temp.innerHTML = ans;
@@ -245,72 +142,43 @@
         if (el.value.trim() === target) success(id, el);
         else fail(id, el);
     }
-
     function checkDel(el, id) {
         if (el.value === "") success(id, el);
         else fail(id, el);
     }
-
     function success(id, el) {
-        el.nextElementSibling.innerHTML = "✨ CHALLENGE SUCCESS!";
+        el.nextElementSibling.innerHTML = "✨ SUCCESS!";
         document.getElementById(id).classList.add('completed');
         done.add(id);
-        if (done.size === totalMissions) celebrate();
+        if (done.size === 15) celebrate();
     }
-
     function fail(id, el) {
         el.nextElementSibling.innerHTML = "";
         document.getElementById(id).classList.remove('completed');
         done.delete(id);
     }
-
     function celebrate() {
         document.getElementById('final-zone').style.display = 'block';
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        
-        // 꽃가루 파티 시작 (양과 시간을 늘림)
-        fireConfetti(10, 8); // 10군데에서, 8초 동안
+        let end = Date.now() + 8000;
+        (function frame() {
+            createConfetti();
+            if (Date.now() < end) requestAnimationFrame(frame);
+        }());
     }
-
-    function fireConfetti(locations, durationSeconds) {
-        const interval = setInterval(() => {
-            for (let i = 0; i < locations; i++) {
-                createConfettiPiece();
-            }
-        }, 150); // 0.15초마다 꽃가루 생성
-
-        setTimeout(() => {
-            clearInterval(interval); // 지정된 시간이 지나면 생성 중지
-        }, durationSeconds * 1000);
-    }
-
-    function createConfettiPiece() {
-        // 더 다양한 색상 조합 (금빛 포함)
-        const colors = ['#f1c40f', '#ffeb3b', '#e67e22', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#fff'];
+    function createConfetti() {
+        const colors = ['#f1c40f', '#ffeb3b', '#e67e22', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6'];
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
-        
-        // 랜덤 위치 및 스타일
         confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.top = (Math.random() * -20 - 10) + 'px'; // 화면 위쪽에서 시작
+        confetti.style.top = '-10px';
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.width = (Math.random() * 10 + 6) + 'px'; // 크기도 랜덤
-        confetti.style.height = (Math.random() * 10 + 6) + 'px';
-        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px'; // 모양도 랜덤 (동그라미, 네모)
-        confetti.style.opacity = Math.random() * 0.5 + 0.5; // 투명도 랜덤
-
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
         document.body.appendChild(confetti);
-        
-        // 애니메이션 정의 (천천히, 회전하며 떨어짐)
-        const fallAnimation = confetti.animate([
-            { transform: 'translateY(0) rotate(0deg)', opacity: confetti.style.opacity },
+        confetti.animate([
+            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
             { transform: `translateY(100vh) translateX(${(Math.random() - 0.5) * 200}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
-        ], {
-            duration: Math.random() * 3000 + 4000, // 4~7초 동안 천천히 떨어짐
-            easing: 'cubic-bezier(0, .25, .5, 1)' // 부드러운 낙하 효과
-        });
-
-        fallAnimation.onfinish = () => confetti.remove();
+        ], { duration: Math.random() * 3000 + 4000, easing: 'cubic-bezier(0, .25, .5, 1)' }).onfinish = () => confetti.remove();
     }
 </script>
 </body>
