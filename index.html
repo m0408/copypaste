@@ -21,32 +21,40 @@
             overflow-x: hidden;
         }
 
-        /* 우상단 고정 타이머 스타일 */
-        #timer-display {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(26, 42, 108, 0.9);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 1.4rem;
-            font-weight: 800;
-            z-index: 2000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            border: 2px solid var(--gold);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        /* 이름 입력 팝업 */
+        #name-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center;
+            z-index: 5000;
         }
+        .name-box {
+            background: white; padding: 50px; border-radius: 30px; text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            max-width: 500px; width: 90%;
+        }
+        .name-box h2 { margin-top: 0; color: #1a2a6c; font-size: 2rem; margin-bottom: 15px; }
+        .name-box .description { 
+            font-size: 1.1rem; color: #555; line-height: 1.5; margin-bottom: 30px; 
+            background: #f0f7ff; padding: 15px; border-radius: 15px; border: 1px dashed var(--primary);
+        }
+        .name-box input { padding: 18px; font-size: 1.3rem; border: 2px solid #ddd; border-radius: 12px; width: 80%; margin-bottom: 25px; text-align: center; outline: none; }
+        .start-btn { background: var(--primary); color: white; border: none; padding: 18px 60px; border-radius: 50px; cursor: pointer; font-size: 1.3rem; font-weight: bold; transition: 0.3s; }
 
-        .header { text-align: center; margin-bottom: 70px; animation: fadeInDown 1s ease; }
-        .header h1 { 
-            font-size: 3.2rem; color: #1a2a6c; margin: 0; 
-            background: linear-gradient(to right, #1a2a6c, #4a90e2);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        /* 우상단 정보창 */
+        #status-display {
+            position: fixed; top: 20px; right: 20px;
+            background: rgba(26, 42, 108, 0.95); color: white;
+            padding: 20px; border-radius: 20px; z-index: 2000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3); border: 2px solid var(--gold); min-width: 200px;
         }
-        .header p { font-size: 1.3rem; color: #7f8c8d; margin-top: 15px; }
+        .user-name { font-size: 1.2rem; font-weight: 800; color: var(--gold); border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; margin-bottom: 10px; text-align: center; }
+        .current-timer { font-size: 1.8rem; font-weight: 800; text-align: center; margin-bottom: 10px; }
+        .history-list { font-size: 0.95rem; max-height: 150px; overflow-y: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
+        .history-item { display: flex; justify-content: space-between; margin-bottom: 5px; }
+
+        .header { text-align: center; margin-bottom: 70px; }
+        .header h1 { font-size: 3.2rem; color: #1a2a6c; margin: 0; background: linear-gradient(to right, #1a2a6c, #4a90e2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header p { font-size: 1.3rem; color: #5a6a82; margin-top: 15px; font-weight: 500; word-break: keep-all; }
 
         .container { max-width: 850px; margin: 0 auto; min-height: 100vh; }
 
@@ -58,89 +66,102 @@
             box-shadow: 0 5px 15px rgba(26, 42, 108, 0.2);
         }
 
-        .mission { 
-            background: white; margin-bottom: 30px; padding: 35px; border-radius: 25px; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.03); border: 2px solid transparent;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
-        }
-        .mission.completed { 
-            border-color: var(--success); background-color: #fafffb;
-            transform: translateY(-8px) scale(1.01);
-        }
+        .mission { background: white; margin-bottom: 30px; padding: 35px; border-radius: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.03); border: 2px solid transparent; transition: all 0.4s ease; position: relative; }
+        .mission.completed { border-color: var(--success); background-color: #fafffb; transform: translateY(-5px); }
+        .instruction { font-weight: 700; font-size: 1.25rem; margin-bottom: 18px; line-height: 1.4; }
+        .instruction span.tag { font-size: 0.85rem; background: #edf2f7; padding: 5px 10px; border-radius: 8px; color: #4a5568; margin-right: 8px; }
         
-        .instruction { font-weight: 700; font-size: 1.25rem; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
-        .instruction .tag { font-size: 0.85rem; background: #edf2f7; padding: 5px 10px; border-radius: 8px; color: #4a5568; }
+        .story-display { font-size: 1.4rem; padding: 22px; background: #f7fafc; border-radius: 15px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
         
-        .story-display { font-size: 1.35rem; padding: 22px; background: #f7fafc; border-radius: 15px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
-        
-        input[type="text"], textarea { 
-            width: 100%; padding: 18px; font-size: 1.2rem; border: 2px solid #e2e8f0; 
-            border-radius: 15px; box-sizing: border-box; transition: all 0.3s;
-        }
-        input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 5px rgba(74, 144, 226, 0.15); outline: none; }
-        
-        .copy-box { background-color: #fff9db; border: 2px dashed #f1c40f; cursor: pointer; height: 90px; }
-        .delete-box { color: #cbd5e0; height: 80px; }
-        .result { margin-top: 15px; font-weight: 800; text-align: right; height: 28px; color: var(--success); font-size: 1.1rem; }
+        /* 팁: 문장 전체 복사용 박스 (Ctrl+A 최적화) */
+        .all-copy-box { background-color: #f0f7ff; border: 2px dashed var(--primary); cursor: pointer; color: var(--primary); font-weight: bold; }
 
-        #final-zone { 
-            display: none; text-align: center; padding: 100px 50px; background: white; 
-            border-radius: 35px; margin-top: 80px; border: 5px solid var(--gold);
-            animation: bounceIn 1.2s both, pulseGold 2s infinite; position: relative; z-index: 10;
-        }
-        .trophy { font-size: 6rem; margin-bottom: 25px; animation: trophyBounce 1s infinite alternate; }
-        .record-box { background: #f1f8e9; padding: 20px; border-radius: 15px; margin: 20px 0; border: 2px dashed var(--success); font-size: 1.5rem; font-weight: bold; color: #2e7d32; }
+        input[type="text"], textarea { width: 100%; padding: 18px; font-size: 1.2rem; border: 2px solid #e2e8f0; border-radius: 15px; box-sizing: border-box; outline: none; }
+        
+        .result { margin-top: 15px; font-weight: 800; text-align: right; color: var(--success); height: 24px; font-size: 1.1rem; }
 
-        footer { margin-top: 100px; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #a0aec0; font-size: 1rem; }
+        #final-zone { display: none; text-align: center; padding: 80px 50px; background: white; border-radius: 35px; margin-top: 80px; border: 5px solid var(--gold); }
+        .record-box { background: #f1f8e9; padding: 25px; border-radius: 15px; margin: 25px 0; font-size: 1.8rem; font-weight: bold; color: #2e7d32; border: 2px dashed #2e7d32; }
 
+        footer { margin-top: 100px; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #a0aec0; }
+        
         .blue { color: #3498db; font-weight: bold; }
         .red { color: #e74c3c; font-weight: bold; }
         .green { color: #27ae60; font-weight: bold; }
         .orange { color: #f39c12; font-weight: bold; }
-
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); } }
-        @keyframes trophyBounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
         .confetti { position: fixed; width: 10px; height: 10px; pointer-events: none; z-index: 1000; }
     </style>
 </head>
 <body>
 
-<div id="timer-display">⏱️ <span id="timer-sec">0</span>초</div>
+<div id="name-overlay">
+    <div class="name-box">
+        <h2>🖱️ 복사 붙여넣기 달인 도전!</h2>
+        <div class="description">
+            화면에 나오는 글자들을 마우스와 단축키로<br>
+            <b>최대한 빠르게 복사해서 붙여넣는 게임</b>이에요!<br>
+            준비가 되었다면 이름을 입력해주세요. ✨
+        </div>
+        <input type="text" id="user-name-input" placeholder="이름을 입력하세요" maxlength="10">
+        <br>
+        <button class="start-btn" onclick="startGame()">도전 시작하기!</button>
+    </div>
+</div>
+
+<div id="status-display">
+    <div class="user-name" id="display-name">도전자</div>
+    <div class="current-timer">⏱️ <span id="timer-sec">0</span>초</div>
+    <div class="history-list" id="record-history"></div>
+</div>
 
 <div class="container">
     <div class="header">
         <h1>복사 붙여넣기 달인 도전기</h1>
-        <p>기록을 단축해 보세요! 모든 미션을 완료하면 걸린 시간이 나와요. ⏱️</p>
+        <p>연습할수록 내 손가락이 마법처럼 빨라질 거예요!<br>방금 세운 나의 최고 기록을 뛰어넘어 볼까요? ✨</p>
     </div>
 
-    <div class="level-card">🌱 1단계: 마우스 드래그 & 우클릭 도전</div>
-    <div class="mission" id="m1"><p class="instruction"><span class="tag">도전 1</span> <span class="blue">아기 돼지</span>만 복사해서 붙여넣으세요.</p><div class="story-display">어느 날 <span class="blue">아기 돼지</span>가 집을 지었어요.</div><input type="text" oninput="check(this, '아기 돼지', 'm1')"><div class="result"></div></div>
-    <div class="mission" id="m2"><p class="instruction"><span class="tag">도전 2</span> <span class="red">짚으로 만든 집</span>을 복사하세요.</p><div class="story-display">첫째는 <span class="red">짚으로 만든 집</span>을 지었답니다.</div><input type="text" oninput="check(this, '짚으로 만든 집', 'm2')"><div class="result"></div></div>
+    <div class="level-card">🌱 1단계: 마우스와 친해지기! (드래그 & 우클릭)</div>
+    <div class="mission" id="m1"><p class="instruction"><span class="tag">도전 1</span> [마우스 우클릭]으로 <span class="blue">아기 돼지</span>만 복사해서 붙여넣으세요.</p><div class="story-display">어느 날 <span class="blue">아기 돼지</span>가 집을 지었어요.</div><input type="text" oninput="check(this, '아기 돼지', 'm1')"><div class="result"></div></div>
+    <div class="mission" id="m2"><p class="instruction"><span class="tag">도전 2</span> [마우스 우클릭]으로 <span class="red">짚으로 만든 집</span>을 복사하세요.</p><div class="story-display">첫째는 <span class="red">짚으로 만든 집</span>을 지었답니다.</div><input type="text" oninput="check(this, '짚으로 만든 집', 'm2')"><div class="result"></div></div>
     <div class="mission" id="m3"><p class="instruction"><span class="tag">도전 3</span> [마우스 우클릭] 메뉴로 <span class="green">나무</span>라는 글자만 복사하세요.</p><div class="story-display">둘째는 <span class="green">나무</span>로 집을 지었습니다.</div><input type="text" oninput="check(this, '나무', 'm3')"><div class="result"></div></div>
     <div class="mission" id="m4"><p class="instruction"><span class="tag">도전 4</span> [마우스 우클릭]으로 <span class="orange">벽돌집</span>만 복사하세요.</p><div class="story-display">셋째는 <span class="orange">벽돌집</span>을 튼튼하게 지었지요.</div><input type="text" oninput="check(this, '벽돌집', 'm4')"><div class="result"></div></div>
-    <div class="mission" id="m5"><p class="instruction"><span class="tag">도전 5</span> 파란색으로 표시된 <span class="blue">문장 전체(마침표 포함)</span>를 복사하세요.</p><div class="story-display"><span class="blue">늑대가 나타나 후우~ 하고 입김을 불었습니다.</span></div><input type="text" oninput="check(this, '늑대가 나타나 후우~ 하고 입김을 불었습니다.', 'm5')"><div class="result"></div></div>
+    
+    <div class="mission" id="m5">
+        <p class="instruction"><span class="tag">도전 5</span> 아래 박스를 클릭하고 <b>Ctrl + A</b>를 활용해 <span class="blue">문장 전체</span>를 복사하세요.</p>
+        <textarea class="story-display all-copy-box" id="q5-source" readonly>늑대가 나타나 후우~ 하고 입김을 불었습니다.</textarea>
+        <input type="text" oninput="check(this, '늑대가 나타나 후우~ 하고 입김을 불었습니다.', 'm5')"><div class="result"></div>
+    </div>
 
-    <div class="level-card">🚀 2단계: 핵심 단축키(Ctrl+C, V) 도전</div>
-    <div class="mission" id="m6"><p class="instruction"><span class="tag">도전 6</span> <span>Ctrl + C</span> / <span>V</span> 단축키로 <span class="red">금도끼</span>를 옮기세요.</p><div class="story-display">산신령이 <span class="red">금도끼</span>를 번쩍 들었습니다.</div><input type="text" oninput="check(this, '금도끼', 'm6')"><div class="result"></div></div>
-    <div class="mission" id="m7"><p class="instruction"><span class="tag">도전 7</span> <span>Ctrl + C</span> / <span>V</span> 단축키로 <span class="blue">은도끼</span>를 옮기세요.</p><div class="story-display">이번에는 반짝이는 <span class="blue">은도끼</span>를 보여주셨어요.</div><input type="text" oninput="check(this, '은도끼', 'm7')"><div class="result"></div></div>
-    <div class="mission" id="m8"><p class="instruction"><span class="tag">도전 8</span> <span>Ctrl + C</span> / <span>V</span> 단축키로 <span class="green">정직</span>이라는 두 글자만 옮기세요.</p><div class="story-display">나무꾼은 참 <span class="green">정직</span>한 사람이었습니다.</div><input type="text" oninput="check(this, '정직', 'm8')"><div class="result"></div></div>
-    <div class="mission" id="m9"><p class="instruction"><span class="tag">도전 9</span> <span>Ctrl + C</span> / <span>V</span> 단축키로 파란색 영역의 <span class="blue">따옴표(")와 물음표(?)</span>까지 모두 복사하세요.</p><div class="story-display"><span class="blue">"이 금도끼가 네 도끼냐?"</span></div><input type="text" oninput="check(this, '&#34;이 금도끼가 네 도끼냐?&#34;', 'm9')"><div class="result"></div></div>
-    <div class="mission" id="m10"><p class="instruction"><span class="tag">도전 10</span> <span>Ctrl + C</span> / <span>V</span> 단축키로 파란색 영역 <span class="blue">문장 전체(따옴표 포함)</span>를 복사하세요.</p><div class="story-display"><span class="blue">"제 도끼는 낡은 쇠도끼입니다."</span></div><input type="text" oninput="check(this, '&#34;제 도끼는 낡은 쇠도끼입니다.&#34;', 'm10')"><div class="result"></div></div>
+    <div class="level-card">🚀 2단계: 손가락 마법사 되기! (Ctrl+C, V)</div>
+    <div class="mission" id="m6"><p class="instruction"><span class="tag">도전 6</span> <span>Ctrl + C / V</span> 단축키로 <span class="red">금도끼</span>를 옮기세요.</p><div class="story-display">산신령이 <span class="red">금도끼</span>를 번쩍 들었습니다.</div><input type="text" oninput="check(this, '금도끼', 'm6')"><div class="result"></div></div>
+    <div class="mission" id="m7"><p class="instruction"><span class="tag">도전 7</span> <span>Ctrl + C / V</span> 단축키로 <span class="blue">은도끼</span>를 옮기세요.</p><div class="story-display">이번에는 반짝이는 <span class="blue">은도끼</span>를 보여주셨어요.</div><input type="text" oninput="check(this, '은도끼', 'm7')"><div class="result"></div></div>
+    <div class="mission" id="m8"><p class="instruction"><span class="tag">도전 8</span> <span>Ctrl + C / V</span> 단축키로 <span class="green">정직</span>이라는 두 글자만 옮기세요.</p><div class="story-display">나무꾼은 참 <span class="green">정직</span>한 사람이었습니다.</div><input type="text" oninput="check(this, '정직', 'm8')"><div class="result"></div></div>
+    
+    <div class="mission" id="m9">
+        <p class="instruction"><span class="tag">도전 9</span> 아래 박스 클릭 후 <b>Ctrl + A</b>로 <span class="blue">문장 전체(따옴표 포함)</span>를 복사하세요.</p>
+        <textarea class="story-display all-copy-box" id="q9-source" readonly>"이 금도끼가 네 도끼냐?"</textarea>
+        <input type="text" oninput="check(this, '&#34;이 금도끼가 네 도끼냐?&#34;', 'm9')"><div class="result"></div>
+    </div>
+    
+    <div class="mission" id="m10">
+        <p class="instruction"><span class="tag">도전 10</span> 아래 박스 클릭 후 <b>Ctrl + A</b>로 <span class="blue">문장 전체(따옴표 포함)</span>를 복사하세요.</p>
+        <textarea class="story-display all-copy-box" id="q10-source" readonly>"제 도끼는 낡은 쇠도끼입니다."</textarea>
+        <input type="text" oninput="check(this, '&#34;제 도끼는 낡은 쇠도끼입니다.&#34;', 'm10')"><div class="result"></div>
+    </div>
 
-    <div class="level-card">🔥 3단계: 전체 선택(Ctrl + A) & 삭제 도전</div>
+    <div class="level-card">🔥 3단계: 싹쓸이 대장 되기! (Ctrl+A & 삭제)</div>
     <div class="mission" id="m11"><p class="instruction"><span class="tag">도전 11</span> 박스 클릭 → <span>Ctrl + A</span> → 복사해서 붙여넣기!</p><textarea class="copy-box" id="q11" readonly>흥부와 놀부 형제가 살고 있었는데, 흥부는 마음씨가 착했어요.</textarea><textarea oninput="check(this, document.getElementById('q11').value, 'm11')"></textarea><div class="result"></div></div>
-    <div class="mission" id="m12"><p class="instruction"><span class="tag">도전 12</span> 박스 클릭 → <span>Ctrl + A</span> → 지우기!</p><textarea class="delete-box" oninput="checkDel(this, 'm12')">이 글자들을 한꺼번에 싹 지워보세요!</textarea><div class="result"></div></div>
-    <div class="mission" id="m13"><p class="instruction"><span class="tag">도전 13</span> <span>Ctrl + A</span>로 긴 문장을 한꺼번에 복사하세요.</p><textarea class="copy-box" id="q13" readonly style="height:90px;">제비가 물어다 준 박씨를 심었더니 커다란 박이 열렸어요. 그 박 안에서는 금은보화가 쏟아져 나와 흥부는 부자가 되었답니다!</textarea><textarea style="height:90px;" oninput="check(this, document.getElementById('q13').value, 'm13')"></textarea><div class="result"></div></div>
-    <div class="mission" id="m14"><p class="instruction"><span class="tag">도전 14</span> 박스 안을 클릭하고 <span>Ctrl + A</span>로 싹 지우세요.</p><textarea class="delete-box" oninput="checkDel(this, 'm14')">글자를 모두 없애면 미션 성공입니다!</textarea><textarea></textarea><div class="result"></div></div>
+    <div class="mission" id="m12"><p class="instruction"><span class="tag">도전 12</span> 박스 클릭 → <span>Ctrl + A</span> → 지우기!</p><textarea class="delete-box" id="q12" oninput="checkDel(this, 'm12')">이 글자들을 한꺼번에 싹 지워보세요!</textarea><div class="result"></div></div>
+    <div class="mission" id="m13"><p class="instruction"><span class="tag">도전 13</span> 박스 클릭 → <span>Ctrl + A</span>로 긴 문장을 한꺼번에 복사하세요.</p><textarea class="copy-box" id="q13" readonly style="height:90px;">제비가 물어다 준 박씨를 심었더니 커다란 박이 열렸어요. 그 박 안에서는 금은보화가 쏟아져 나와 흥부는 부자가 되었답니다!</textarea><textarea style="height:90px;" oninput="check(this, document.getElementById('q13').value, 'm13')"></textarea><div class="result"></div></div>
+    <div class="mission" id="m14"><p class="instruction"><span class="tag">도전 14</span> 박스 클릭 → <span>Ctrl + A</span> → 싹 지우기!</p><textarea class="delete-box" id="q14" oninput="checkDel(this, 'm14')">글자를 모두 없애면 미션 성공입니다!</textarea><div class="result"></div></div>
     <div class="mission" id="m15"><p class="instruction"><span class="tag">도전 15</span> 모든 단축키를 사용해서 완성하세요!</p><textarea class="copy-box" id="q15" readonly>축하합니다! 당신은 이제 진정한 복사 붙여넣기 달인입니다. 최고예요!</textarea><textarea oninput="check(this, document.getElementById('q15').value, 'm15')"></textarea><div class="result"></div></div>
 
     <div id="final-zone">
         <div class="trophy">🏆</div>
-        <h2 style="font-size: 3rem; margin: 0; color: #1b5e20;">황금 복붙 달인 탄생!</h2>
-        <div class="record-box">🎉 나의 기록: <span id="final-time">0</span>초 🎉</div>
-        <p style="font-size: 1.4rem; color: #333; margin: 25px 0;">대단해요! 기록을 더 단축할 수 있을까요?</p>
-        <button onclick="location.reload()" style="padding: 15px 40px; border: none; background: linear-gradient(to right, #1a2a6c, #4a90e2); color: white; border-radius: 50px; cursor: pointer; font-size: 1.1rem; font-weight: bold;">다시 도전해서 기록 깨기!</button>
+        <h2 style="font-size: 2.5rem; margin: 0; color: #1b5e20;">🎊 복사 붙여넣기 달인 등극! 🎊</h2>
+        <div class="record-box">🎉 <span id="final-name">명쌤</span>님의 이번 기록: <span id="final-time">0</span>초 🎉</div>
+        <p style="font-size: 1.3rem; color: #333; margin: 25px 0;">연습할수록 기록은 계속 줄어들 거예요. 방금 세운 내 기록을 1초만 더 줄여볼까요? 😉</p>
+        <button onclick="resetForNewAttempt()" style="padding: 18px 50px; border: none; background: linear-gradient(to right, #1a2a6c, #4a90e2); color: white; border-radius: 50px; cursor: pointer; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">🏃 내 기록 깨러 한 번 더 가기!</button>
     </div>
 
     <footer>Disital Life Academy @ 2026 명쌤</footer>
@@ -148,15 +169,48 @@
 
 <script>
     let done = new Set();
-    let startTime = null;
-    let timerInterval = null;
     let seconds = 0;
+    let timerInterval = null;
+    let isStarted = false;
+    let userName = "";
+    let attemptCount = 0;
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    // 타이머 시작 함수 (첫 입력 시 실행)
+    function startGame() {
+        const input = document.getElementById('user-name-input').value.trim();
+        if(!input) { alert("이름을 입력해주세요!"); return; }
+        userName = input;
+        document.getElementById('display-name').innerText = userName + " 친구";
+        document.getElementById('final-name').innerText = userName;
+        document.getElementById('name-overlay').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function resetForNewAttempt() {
+        done.clear();
+        seconds = 0;
+        isStarted = false;
+        clearInterval(timerInterval);
+        document.getElementById('timer-sec').innerText = "0";
+        document.getElementById('final-zone').style.display = 'none';
+        
+        const textInputs = document.querySelectorAll('input[type="text"], textarea:not(.delete-box):not([readonly])');
+        textInputs.forEach(f => { f.value = ""; f.style.borderColor = "#e2e8f0"; });
+
+        document.getElementById('q12').value = "이 글자들을 한꺼번에 싹 지워보세요!";
+        document.getElementById('q12').style.borderColor = "#e2e8f0";
+        document.getElementById('q14').value = "글자를 모두 없애면 미션 성공입니다!";
+        document.getElementById('q14').style.borderColor = "#e2e8f0";
+        
+        document.querySelectorAll('.result').forEach(r => r.innerHTML = "");
+        document.querySelectorAll('.mission').forEach(m => m.classList.remove('completed'));
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function startTimer() {
-        if (!startTime) {
-            startTime = Date.now();
+        if (!isStarted) {
+            isStarted = true;
             timerInterval = setInterval(() => {
                 seconds++;
                 document.getElementById('timer-sec').innerText = seconds;
@@ -166,30 +220,27 @@
 
     function playPopSound() {
         if (audioCtx.state === 'suspended') audioCtx.resume();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(400, audioCtx.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-        oscillator.start();
-        oscillator.stop(audioCtx.currentTime + 0.1);
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.connect(g); g.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+        g.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.1);
     }
 
     function check(el, ans, id) {
-        startTimer(); // 입력 시작 시 타이머 작동
-        let temp = document.createElement("div");
-        temp.innerHTML = ans;
-        let target = temp.textContent.trim();
-        if (el.value.trim() === target) {
+        startTimer();
+        let target = document.createElement("div");
+        target.innerHTML = ans;
+        if (el.value.trim() === target.textContent.trim()) {
             if (!done.has(id)) {
                 playPopSound();
                 miniCelebrate(el);
+                success(id, el);
             }
-            success(id, el);
         } else fail(id, el);
     }
 
@@ -199,20 +250,16 @@
             if (!done.has(id)) {
                 playPopSound();
                 miniCelebrate(el);
+                success(id, el);
             }
-            success(id, el);
         } else fail(id, el);
     }
 
     function success(id, el) {
-        el.nextElementSibling.innerHTML = "✨ 성공! 아주 잘했어요.";
+        el.nextElementSibling.innerHTML = "✅ 성공! 손가락이 정말 빠른데요?";
         document.getElementById(id).classList.add('completed');
         done.add(id);
-        if (done.size === 15) {
-            clearInterval(timerInterval);
-            document.getElementById('final-time').innerText = seconds;
-            finalCelebrate();
-        }
+        if (done.size === 15) finishGame();
     }
 
     function fail(id, el) {
@@ -221,39 +268,49 @@
         done.delete(id);
     }
 
+    function finishGame() {
+        clearInterval(timerInterval);
+        attemptCount++;
+        const history = document.getElementById('record-history');
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        let timeText = seconds >= 60 ? Math.floor(seconds/60) + "분 " + (seconds%60) + "초" : seconds + "초";
+        item.innerHTML = `<span>${attemptCount}회차</span> <span>${timeText}</span>`;
+        history.prepend(item);
+        document.getElementById('final-time').innerText = seconds;
+        document.getElementById('final-zone').style.display = 'block';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        finalCelebrate();
+    }
+
     function miniCelebrate(el) {
-        const rect = el.getBoundingClientRect();
+        const r = el.getBoundingClientRect();
         for (let i = 0; i < 20; i++) {
-            createConfetti(rect.left, rect.top + window.scrollY + rect.height / 2, -1);
-            createConfetti(rect.right, rect.top + window.scrollY + rect.height / 2, 1);
+            createConfetti(r.left, r.top + window.scrollY + r.height / 2, -1);
+            createConfetti(r.right, r.top + window.scrollY + r.height / 2, 1);
         }
     }
 
     function createConfetti(x, y, dir) {
         const colors = ['#ff6b6b', '#fcc419', '#51cf66', '#339af0', '#cc5de8', '#f1c40f'];
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.left = x + 'px';
-        confetti.style.top = y + 'px';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        document.body.appendChild(confetti);
-
-        confetti.animate([
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = x + 'px'; c.style.top = y + 'px';
+        c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        document.body.appendChild(c);
+        c.animate([
             { transform: 'translate(0, 0) scale(1)', opacity: 1 },
             { transform: `translate(${dir * (Math.random() * 100 + 50)}px, ${Math.random() * -100 - 50}px) scale(0)`, opacity: 0 }
-        ], { duration: 600, easing: 'ease-out' }).onfinish = () => confetti.remove();
+        ], { duration: 600, easing: 'ease-out' }).onfinish = () => c.remove();
     }
 
     function finalCelebrate() {
-        document.getElementById('final-zone').style.display = 'block';
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         let end = Date.now() + 8000;
         (function frame() {
             for(let i=0; i<5; i++) {
                 const c = document.createElement('div');
                 c.className = 'confetti';
-                c.style.left = Math.random() * 100 + 'vw';
-                c.style.top = '-10px';
+                c.style.left = Math.random() * 100 + 'vw'; c.style.top = '-10px';
                 c.style.backgroundColor = ['#f1c40f', '#ffeb3b', '#e67e22', '#3498db', '#2ecc71'][Math.floor(Math.random()*5)];
                 document.body.appendChild(c);
                 c.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(100vh) rotate(720deg)`, opacity: 0 }], 
